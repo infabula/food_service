@@ -147,10 +147,36 @@ pytest
 #+END_SRC
 
 * Automating the testrunner
+** run script
 - create a script ~run_tests~ in the root of the project and make it excecutable
-#+BEGIN_SRC 
+#+BEGIN_SRC ascii
 #!/bin/sh
 # filename: run_tests
 
 pytest
 #+END_SRC
+
+** git pre-commit hook script
+- add a ~pre-commit~ script to the project root and make it executable
+#+BEGIN_SRC ascii
+#!/bin/sh
+#filename: pre-commit
+
+git stash -q --keep-index
+./run_tests.sh
+RESULT=$?
+git stash pop -q
+[ $RESULT -ne 0 ] && exit 1
+exit 0
+#+END_SRC
+
+- link the script to the current local git repository hook
+#+BEGIN_SRC sh
+cd ./git/hooks
+ln -s ../../pre-commit ./pre-commit
+#+END_SRC
+*** windows :noexport:
+#+BEGIN_SRC ascii
+mklink .\pre-commit ..\..\pre-commit
+#+END_SRC
+
