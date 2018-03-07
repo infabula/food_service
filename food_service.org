@@ -146,3 +146,11 @@ def test_index():
 pytest
 #+END_SRC
 
+* Automating the testrunner
+- create a script ~run_tests~ in the root of the project and make it excecutable
+#+BEGIN_SRC 
+#!/bin/sh
+# filename: run_tests
+
+pytest
+#+END_SRC

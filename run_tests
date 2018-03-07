@@ -1,0 +1,4 @@
+#!/bin/sh
+# filename: run_tests
+
+pytest
