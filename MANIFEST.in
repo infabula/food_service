@@ -1,3 +1,2 @@
 graft food_service/templates
 graft food_service/static
-include food_service/schema.sql

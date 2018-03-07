@@ -1,0 +1,129 @@
+* Food service
+* Setup intern 							   :noexport:
+** Create example directories
+
+** Setup virtual environment
+#+NAME: create virtual env
+#+HEADER: :restults output
+#+BEGIN_SRC sh
+mkvirtualenv food_service
+#+END_SRC
+
+#+RESULTS: create virtual env
+
+#+NAME: workon food_service
+#+HEADER: results: none
+#+BEGIN_SRC elisp :session food-service 
+(pyvenv-workon "food_service")
+#+END_SRC
+
+#+RESULTS: workon-food_service
+
+
+#+NAME: show_virtualenv
+#+BEGIN_SRC sh :session food_service
+echo $VIRTUAL_ENV
+which python
+#+END_SRC
+
+#+RESULTS: show_virtualenv
+|                                                 |
+| /home/user/.virtualenvs/food_service            |
+| /home/user/.virtualenvs/food_service/bin/python |
+
+
+#+BEGIN_SRC python :results output :session food_service
+import sys
+print('\n'.join(sys.path))
+#+END_SRC
+
+
+* Setup
+** Create a virtual environment
+#+NAME: create_virtualenv
+#+BEGIN_SRC sh
+mkvirtualenv concert_service
+#+END_SRC
+
+** Install packages
+Testing packages:
+#+NAME: test-package-install
+#+BEGIN_SRC sh :session food_service
+pip install nose 
+#+END_SRC
+
+Deployment packages
+#+NAME: test-package-install
+#+BEGIN_SRC sh :session food_service
+pip install devpi-client
+#+END_SRC
+
+Application packages:
+#+NAME: test-package-install
+#+BEGIN_SRC sh :session food_service
+pip install flask flask-restful 
+#+END_SRC
+
+* Starting with a package structure
+#+NAME: package-structure
+#+BEGIN_SRC ascii
+food_service/
+          README.rst
+	  LICENSE
+	  setup.py
+	  requirements.txt
+          docs/
+	  static/
+	  templates/
+          tests/
+          food_service/
+                 __init__.py
+		 food_service.py
+#+END_SRC
+
+#+BEGIN_SRC python
+#+END_SRC
+
+** setup.py
+#+NAME: initial-setup.py
+#+HEADER: :tangle food_service/setup.py
+#+BEGIN_SRC python
+
+#+END_SRC
+
+#+BEGIN_SRC sh :dir ./ :results none
+mkdir -p food_service
+#+END_SRC
+
+#+NAME: food_service food_service.py
+#+HEADER: :tangle food_service/food_service.py
+#+BEGIN_SRC python
+
+#+END_SRC
+
+** __init__.py
+
+#+NAME: food_service__init__.py
+#+HEADER: :tangle food_service/__init__.py
+#+BEGIN_SRC python
+import .food_service import app
+#+END_SRC
+
+* Install the package in the virtual env
+#+BEGIN_SRC sh
+python -m pip install --editable .
+#+END_SRC
+- ~--editable~ gives the option to re-install the package after making changes
+
+** Test directory
+Create a file context.py
+#+NAME: test_context.py
+#+HEADER: :tangle tests/context.py
+#+BEGIN_SRC python
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import concert_service
+
+#+END_SRC
