@@ -1,2 +1,5 @@
 __pychache__
 food_service/__pycache__
+tests/__pycache__
+.pytest_cache
+food_service.egg-info

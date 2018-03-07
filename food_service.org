@@ -109,21 +109,40 @@ mkdir -p food_service
 import .food_service import app
 #+END_SRC
 
-* Install the package in the virtual env
+* Installing and running the package 
 #+BEGIN_SRC sh
 python -m pip install --editable .
 #+END_SRC
 - ~--editable~ gives the option to re-install the package after making changes
 
-** Test directory
-Create a file context.py
-#+NAME: test_context.py
-#+HEADER: :tangle tests/context.py
-#+BEGIN_SRC python
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-import concert_service
-
+#+BEGIN_SRC sh
+export FLASK_APP=food_service
+export FLASK_DEBUG=True
+flask run
 #+END_SRC
+
+* Adding tests
+- install pytest by adding it to the ~install_requires~ in ~setup.py~
+- re-run the installation
+#+BEGIN_SRC sh
+python -m pip install --editable .
+#+END_SRC 
+
+- add a first test to the test directory 
+#+BEGIN_SRC python
+# food_service/tests/test_index.py
+import pytest
+import food_service
+
+def test_index():
+    food_service.app.testing = True
+    test_client = food_service.app.test_client()
+    response = test_client.get('/')
+    assert b'Food service' in response.data
+#+END_SRC
+
+- run the test with the /testrunner/
+#+BEGIN_SRC sh
+pytest
+#+END_SRC
+
