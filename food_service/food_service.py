@@ -1,9 +1,20 @@
-from flask import (Flask, request, session, g, redirect, url_for, abort, render_template, flash)
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
+from flask_restful import Api
+from food_service.resources.baverage import Baverage
 
 app = Flask(__name__)
 app.config.from_object(__name__) # load config from this file
 
-@app.route('/')
-def index():
-    return "Food service"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/food_service.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # disable signaling support
+
+db = SQLAlchemy(app)
+
+api = Api(app)
+app.config['ERROR_404_HELP'] = False
+
+api.add_resource(Baverage, '/baverage', '/baverage/<int:id>')
+
+

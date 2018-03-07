@@ -181,3 +181,5 @@ mklink .\pre-commit ..\..\pre-commit
 #+END_SRC
 
 * Adding database models
+- install sqlalchemy by adding it to the ~setup.py~ file
+- creating a /model/
